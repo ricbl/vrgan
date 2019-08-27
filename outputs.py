@@ -25,9 +25,11 @@ def save_image(filepath, numpy_array):
 
 class Outputs():
     def __init__(self, opt):
+        if not os.path.exists(opt.save_folder):
+            os.mkdir(opt.save_folder)
         output_folder = opt.save_folder+'/'+opt.experiment+'_'+opt.timestamp
         self.output_folder = output_folder
-        if not os.path.exists(output_folder ):
+        if not os.path.exists(output_folder):
             os.mkdir(output_folder)
         logging.basicConfig(filename = output_folder +'/log.txt' ,level = logging.INFO)
         self.log_configs(opt)
