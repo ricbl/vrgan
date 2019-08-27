@@ -1,5 +1,5 @@
 # VRGAN
-Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder), accepted for MICCAI 2019. This code implementation is done in PyTorch and was partially inspired by [Orobix VAGAN](https://github.com/orobix/Visual-Feature-Attribution-Using-Wasserstein-GANs-Pytorch). 
+Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder), accepted for MICCAI 2019. This code implementation is done in PyTorch and was partially inspired by [Orobix VAGAN code](https://github.com/orobix/Visual-Feature-Attribution-Using-Wasserstein-GANs-Pytorch). 
 
 ## Setup
 
