@@ -1,7 +1,7 @@
 # VRGAN
 Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder), accepted for MICCAI 2019. This code implementation is done in PyTorch and was partially inspired by [Orobix VAGAN code](https://github.com/orobix/Visual-Feature-Attribution-Using-Wasserstein-GANs-Pytorch). 
 
-This algorithm tries to visulize the expected changes in an input image x when an associated regression value y is changed to y'. It uses a generator G to output a difference map Δx that is summed to the original x to produce a modified image x'. In more concrete terms, it can be used to assess how a chest x-ray would change with different levels of severity of a disease like COPD (chronic obstructive pulmonary disease).
+The VRGAN algorithm provides visualization of the expected changes in an input image x when an associated regression value y is changed to y'. It uses a generator G to output a difference map Δx that is summed to the original x to produce a modified image x'. A regressor R is used to guide the learning for G, and both are adversarially trained. In a practical application, it can be used to assess how a chest x-ray would change with different severities of a disease like COPD (chronic obstructive pulmonary disease).
 
 ![](https://github.com/ricbl/vrgan/raw/master/images/vrgan.png)
 
@@ -41,7 +41,7 @@ All the outputs of the model are saved in the runs folder, inside a folder for t
 ## Results
 The model gets a normalized cross-correlation with the ground-truth delta around 0.85 in the validation set in about 10 epochs of training. After choosing the best validation epoch, the same model should be able to get the same score for the test set.
 
-These are the kinds of results you can expect:
+These are the kinds of results you can expect (each image below shows 20 input/output examples in a 4x5 grid):
 
 Input image (x) |  Desired change (Δx ground truth)  |  Produced change (Δx)  | Modified image (x')
 --- | --- | --- | ---
@@ -51,4 +51,4 @@ Input image (x) |  Desired change (Δx ground truth)  |  Produced change (Δx)  
 
 This project is licensed under the MIT License
 
-By: Ricardo Bigolin Lanfredi, [ricbl@sci.utah.edu](mailto:ricbl@sci.utah.edu). 
+By: Ricardo Bigolin Lanfredi, [ricbl@sci.utah.edu](mailto:ricb
