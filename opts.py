@@ -57,7 +57,7 @@ def get_opt():
                                 help='Set the gpus to use, using CUDA_VISIBLE_DEVICES syntax.')
     parser.add_argument('--experiment', type=str, nargs='?', default='',
                                 help='Set the name of the folder where to save the run.')
-    parser.add_argument('--nepochs', type=int, nargs='?', default=1000,
+    parser.add_argument('--nepochs', type=int, nargs='?', default=30,
                                 help='Number of epochs to run training and validation')
     parser.add_argument('--split_validation', type=str, nargs='?', default='val',
                                     help='Use \'val\' to use the validation set for calculating scores every epoch. Use \'test\' for using the test set')
