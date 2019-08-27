@@ -1,3 +1,8 @@
+"""Training a VRGAN
+
+Use this file to train and validate a VRGAN model
+"""
+
 import os
 import torch
 torch.multiprocessing.set_sharing_strategy('file_system')
@@ -29,6 +34,7 @@ def init_model(opt):
         net_g.load_state_dict(torch.load(opt.load_checkpoint_g))
     else:
         net_g.apply(weights_init)
+    
     net_r = torchvision.models.resnet18(pretrained = True) 
     net_r.fc = torch.nn.Linear(in_features = 512, out_features = 1)
     if opt.load_checkpoint_r is not None:
@@ -51,15 +57,19 @@ class BatchNormalizeTensor(object):
         to_return = (tensor-self.mean)/self.std
         return to_return
 
+#normalize input images with imagenet normalization values before using them 
+# with the imagenet pre-trained regressor
 def preprocess_input_resnet(x):
     return BatchNormalizeTensor(torch.FloatTensor([0.485, 0.456, 0.406]).cuda().view([1,3,1,1]), 
             torch.FloatTensor([0.229, 0.224, 0.225]).cuda().view([1,3,1,1]))((x).expand([-1,3,-1,-1]))
 
+#normalize PFT values y before concatenating them to the unet
 def preprocess_pft_values_for_generator(x):
     return BatchNormalizeTensor(torch.FloatTensor([0.7]).cuda(), torch.FloatTensor([0.2]).cuda())(x)
     
 def train(opt, healthy_dataloader, anomaly_dataloader, healthy_dataloader_val,anomaly_dataloader_val, net_g, net_r, optim_g, optim_r, output, metric):
-    #getting a fixed set of validation images to follow the evolution of the correponding output over several epochs
+    #getting a fixed set of validation images to follow the evolution of the
+    # correponding output over several epochs
     fixed_x, fixed_y = iter(healthy_dataloader_val).next()
     _ ,fixed_yprime = iter(anomaly_dataloader_val).next()
     output.log_fixed(fixed_x, fixed_y, fixed_yprime)
@@ -77,7 +87,8 @@ def train(opt, healthy_dataloader, anomaly_dataloader, healthy_dataloader_val,an
             net_r.train()
             net_g.train()
             
-            #following Baumgartner et al. (2018), turning off batch normalization on the regressor (equivalent of the critic)
+            #following Baumgartner et al. (2018), turning off batch normalization 
+            # on the regressor (equivalent of the critic)
             for module in net_r.modules():
                 if isinstance(module, torch.nn.modules.BatchNorm1d) or \
                 isinstance(module, torch.nn.modules.BatchNorm2d) or \
@@ -116,10 +127,12 @@ def train(opt, healthy_dataloader, anomaly_dataloader, healthy_dataloader_val,an
                 
                 optim_r.zero_grad()
                 
-                # Eq. 2 of paper, L_{Rx}, to make the regressor a good regressor on the original dataset
+                # Eq. 2 of paper, L_{Rx}, to make the regressor a good regressor
+                # on the original dataset
                 l_rx = torch.abs(r_x - y).mean()
                 
-                # Eq. 4 of paper, L_{Rx'}, to make the regressor being able to ignore changes made by the generator
+                # Eq. 4 of paper, L_{Rx'}, to make the regressor being able to
+                # ignore changes made by the generator
                 l_rxprime = torch.abs(r_xprime - y).mean()
                 
                 #R* part of Eq. 6
@@ -140,7 +153,8 @@ def train(opt, healthy_dataloader, anomaly_dataloader, healthy_dataloader_val,an
                 # original input image (x) summed with the difference map (G(x,y',y))
                 l_gxprime = (torch.abs(r_xprime - y_prime)).mean()
                 
-                #Eq. 5 in the paper, L_{REG}, penalty on the norm of the difference map to make it just produce the necessary changes 
+                #Eq. 5 in the paper, L_{REG}, penalty on the norm of the
+                # difference map to make it just produce the necessary changes 
                 l_reg = (torch.abs(delta_x)).mean()
                 
                 # G* part of Eq. 6
@@ -148,6 +162,7 @@ def train(opt, healthy_dataloader, anomaly_dataloader, healthy_dataloader_val,an
                 gen_loss.backward()
                 optim_g.step()
                 
+                #save all losses values
                 metric.add_value('l_rx', l_rx)
                 metric.add_value('l_rxprime', l_rxprime)
                 metric.add_value('l_gxprime', l_gxprime)
@@ -195,13 +210,20 @@ def train(opt, healthy_dataloader, anomaly_dataloader, healthy_dataloader_val,an
         output.log_added_values(epoch_index, metric)
     
 def main():
+    #get user options/configurations
     opt = opts.get_opt()
+    
+    #set cuda visible devices if user specified a value
     if opt.gpus is not None:
         os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus
-        
+    
+    #load class to save metrics, iamges and models to disk
     output = outputs.Outputs(opt)
+    
+    #load class to store metrics and losses values
     metric = metrics.Metrics()
-        
+    
+    #load synthetic dataset
     healthy_dataloader_train, anomaly_dataloader_train = init_synth_dataloader_original(
         opt.folder_toy_dataset, opt.batch_size, mode='train')
     healthy_dataloader_val, anomaly_dataloader_val = init_synth_dataloader_original(

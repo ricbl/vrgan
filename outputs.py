@@ -1,3 +1,9 @@
+"""Output to disk management
+
+This module provides a class that manages all the disk outputs that the VRGAN 
+training requires. This includes saving images, models, tensorboard files and logs.
+"""
+
 from tensorboardX import SummaryWriter
 import logging
 from collections import OrderedDict
@@ -7,6 +13,7 @@ import numpy as np
 import torch
 import torchvision
 
+#normalize batch tensor so that all images stay in a range of [-1,1]
 class BatchNormalizeTensorMinMax01(object):
     def __init__(self):
         pass

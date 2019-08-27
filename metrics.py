@@ -1,3 +1,11 @@
+"""VRGAN metrics
+
+File that contain functions for calculating the normalized cross-correlation 
+between two images and a class Metrics for storing losses and metrics during 
+mini batch inferences, so that you can get an epoch summary after the epoch 
+is complete.
+"""
+
 import collections
 import torch
 import synth_dataset

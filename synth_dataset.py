@@ -1,3 +1,10 @@
+"""Synthetic dataset generation and dataloader
+
+To use this script, call the init_synth_dataloader_original to get a dataloader 
+for the synthetic dataset. The dataset will be generated in a h5 file the first 
+time you call this function.
+"""
+
 import numpy as np
 from torch.utils.data import Dataset
 from skimage import filters

@@ -1,3 +1,8 @@
+"""U-net generator
+
+This module provides a UNet class to be used as the generator model in the algorithm
+"""
+
 import torch.nn as nn
 import torch
 import torch.nn.functional as F

@@ -1,5 +1,5 @@
 # VRGAN
-Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder)
+Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder), accepted for MICCAI 2019. This code implementation is done in PyTorch and was partially inspired by [Orobix VAGAN](https://github.com/orobix/Visual-Feature-Attribution-Using-Wasserstein-GANs-Pytorch). 
 
 ## Setup
 
@@ -32,5 +32,17 @@ All the outputs of the model are saved in the runs folder, inside a folder for t
   * regressor_state_dict_<epoch>: checkpoint for the regressor model
   * log.txt: a way to check the configurations used for that run and to check the losses and scores of the model in text format, without loading tensorboard.
 
-## Scores
-The model gets a normalized cross-correlation with the ground-truth delta of 0.853 ± 0.014 in the validation set in about 10 epochs of training. After choosing the best validation epoch, the same model should be able to get the same score for the test set.
+## Results
+The model gets a normalized cross-correlation with the ground-truth delta around 0.85 in the validation set in about 10 epochs of training. After choosing the best validation epoch, the same model should be able to get the same score for the test set.
+
+These are the kinds of results you can expect:
+
+Input image (x) |  Desired change (Δx ground truth)  |  Produced change (Δx)  | Modified image (x')
+--- | --- | --- | ---
+![](https://github.com/ricbl/vrgan/images/x.png)  |  ![](https://github.com/ricbl/vrgan/images/delta_x_gt.png)  | ![](https://github.com/ricbl/vrgan/images/x.png) | ![]()
+
+## License
+
+This project is licensed under the MIT License
+
+By: Ricardo Bigolin Lanfredi, [ricbl@sci.utah.edu](mailto:ricbl@sci.utah.edu). 
