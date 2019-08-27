@@ -1,3 +1,4 @@
 *.hdf5
 runs/
 __pycache__/
+*Thumbs.db

@@ -1,6 +1,8 @@
 # VRGAN
 Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder), accepted for MICCAI 2019. This code implementation is done in PyTorch and was partially inspired by [Orobix VAGAN code](https://github.com/orobix/Visual-Feature-Attribution-Using-Wasserstein-GANs-Pytorch). 
 
+![](https://github.com/ricbl/vrgan/raw/master/images/vrgan.png)
+
 ## Setup
 
 The first run of the code will automatically generate the synthetic dataset. We are going to try to provide a model pre-trained on chest x-rays in the future, depending on release approval. The chest x-ray dataset used to train this model is not publically available, and there are no plans of making it available in the future.
