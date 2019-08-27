@@ -21,7 +21,7 @@ You can train the model on the synthetic dataset using:
 
 To run scoring on the test set, run:
 
-`python train.py --nepochs=1 --split_validation=test --skip_train=true --load_checkpoint_g=<path to a checkpoint to load> --experiment=my_toy_testing`
+`python train.py --nepochs=1 --split_validation=test --skip_train=true --load_checkpoint_g=<path_to_a_checkpoint_to_load> --experiment=my_toy_testing`
 
 You can run `python train.py --help` to see all available options for modifying the training script.
 
@@ -32,10 +32,10 @@ All the outputs of the model are saved in the runs folder, inside a folder for t
   * delta_x_gt.png: ground truth for the delta_x (disease effect map, or difference map) of the fixed set of validation examples
   * real_samples_desired.txt: the desired PFT values for each of the fixed validation images
   * real_samples_gt.txt: the original PFT values for each of the fixed validation images
-  * delta_x_samples_<epoch>.png: delta_x output of the generator at the end of that epoch for the fixed set of examples
-  * xprime_samples_<epoch>: modified input image (sum of original image and delta_x) at the end of that epoch for the fixed set of examples
-  * generator_state_dict_<epoch>: checkpoint for the generator model
-  * regressor_state_dict_<epoch>: checkpoint for the regressor model
+  * delta_x_samples_\<epoch\>.png: delta_x output of the generator at the end of that epoch for the fixed set of examples
+  * xprime_samples_\<epoch\>: modified input image (sum of original image and delta_x) at the end of that epoch for the fixed set of examples
+  * generator_state_dict_\<epoch\>: checkpoint for the generator model
+  * regressor_state_dict_\<epoch\>: checkpoint for the regressor model
   * log.txt: a way to check the configurations used for that run and to check the losses and scores of the model in text format, without loading tensorboard.
 
 ## Results
