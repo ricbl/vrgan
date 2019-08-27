@@ -5,7 +5,7 @@ The VRGAN algorithm can be used to assess how a chest x-ray would change with di
 
 ![](https://github.com/ricbl/vrgan/raw/master/images/vrgan.png)
 
-We are going to try to provide a model pre-trained on chest x-rays in the future, depending on release approval. The chest x-ray dataset used to train this model is not publically available, and there are no plans of making it available in the future.
+The code present here uses a synthetic dataset as proof of concept of the algorithm. In this synthetic dataset, disease severity is associated with the size of the side of a square in a noisy image.  We are going to try to provide a model pre-trained on chest x-rays in the future, depending on release approval. The chest x-ray dataset used to train this model is not publically available, and there are no plans of making it available in the future.
 
 ## Setup
 
