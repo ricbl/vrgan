@@ -1,6 +1,6 @@
 """User configuration file
 
-File organinzing all configurations that may be set by user when running the 
+File organizing all configurations that may be set by user when running the 
 train.py script. 
 Call "python train.py for a complete and formatted list of available user options.
 """

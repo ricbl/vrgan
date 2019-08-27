@@ -39,7 +39,7 @@ These are the kinds of results you can expect:
 
 Input image (x) |  Desired change (Δx ground truth)  |  Produced change (Δx)  | Modified image (x')
 --- | --- | --- | ---
-![](https://github.com/ricbl/vrgan/images/x.png)  |  ![](https://github.com/ricbl/vrgan/images/delta_x_gt.png)  | ![](https://github.com/ricbl/vrgan/images/x.png) | ![]()
+![](https://github.com/ricbl/vrgan/raw/master/images/x.png)  |  ![](https://github.com/ricbl/vrgan/raw/master/images/delta_x_gt.png)  | ![](https://github.com/ricbl/vrgan/raw/master/images/delta_x.png) | ![](https://github.com/ricbl/vrgan/raw/master/images/xprime.png)
 
 ## License
 
