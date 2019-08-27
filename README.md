@@ -1,11 +1,15 @@
 # VRGAN
 Code used for the paper "Adversarial regression training for visualizing the progression of chronic obstructive pulmonary disease with chest x-rays" (arxiv link placeholder), accepted for MICCAI 2019. This code implementation is done in PyTorch and was partially inspired by [Orobix VAGAN code](https://github.com/orobix/Visual-Feature-Attribution-Using-Wasserstein-GANs-Pytorch). 
 
+This algorithm tries to visulize the expected changes in an input image x when an associated regression value y is changed to y'. It uses a generator G to output a difference map Δx that is summed to the original x to produce a modified image x'. In more concrete terms, it can be used to assess how a chest x-ray would change with different levels of severity of a disease like COPD (chronic obstructive pulmonary disease).
+
 ![](https://github.com/ricbl/vrgan/raw/master/images/vrgan.png)
+
+We are going to try to provide a model pre-trained on chest x-rays in the future, depending on release approval. The chest x-ray dataset used to train this model is not publically available, and there are no plans of making it available in the future.
 
 ## Setup
 
-The first run of the code will automatically generate the synthetic dataset. We are going to try to provide a model pre-trained on chest x-rays in the future, depending on release approval. The chest x-ray dataset used to train this model is not publically available, and there are no plans of making it available in the future.
+The first run of the code will automatically generate the synthetic dataset. 
 
 To install all the needed libraries, you can use the requirements.txt file. Use `pip install -r requirements.txt` if you want to install them with pip.
 
@@ -22,7 +26,7 @@ To run scoring on the test set, run:
 You can run `python train.py --help` to see all available options for modifying the training script.
 
 ## Outputs
-All the outputs of the model are saved in the runs folder, inside a folder for the specific experiment you are running (<experiment name>\_<timestamp>). These are the files that are saved:
+All the outputs of the model are saved in the runs folder, inside a folder for the specific experiment you are running (\<experiment name\>\_\<timestamp\>). These are the files that are saved:
   * tensorboard/events.out.tfevents.<...>: tensorboard file for following the training losses and validation score in real-time and for checking their evolution through the epochs.
   * real_samples: a fixed batch of validation examples for which outputs will be printed
   * delta_x_gt.png: ground truth for the delta_x (disease effect map, or difference map) of the fixed set of validation examples
