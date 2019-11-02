@@ -4,4 +4,4 @@ h5py==2.9.0
 scikit-image==0.15.0
 tensorboardX==1.8
 numpy==1.17.0
-pillow==6.1.0
+pillow==6.2.0
