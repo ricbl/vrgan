@@ -67,7 +67,7 @@ def get_opt():
                                         help='Set a filepath locating a model checkpoint for the regressor that you want to load')
     args = parser.parse_args()
     
-    timestamp = time.strftime("%Y%m%d-%H%M%S") + '-' + str(randint(1000,9999))
+    timestamp = time.strftime("%Y%m%d-%H%M%S") + '-' + str(randint(10000,99999))
     args.timestamp = timestamp
     
     return args

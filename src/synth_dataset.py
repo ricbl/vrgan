@@ -12,11 +12,14 @@ import h5py
 import os
 import torchvision.transforms as transforms
 import torch
+from . import utils_dataset
+import sys
+sys.modules['synth_dataset']=None
 
 class SynthDataset(Dataset):
 
     def __init__(self, output_folder, mode='train', transform=None, anomaly = False):
-        super(SynthDataset, self).__init__()
+        super().__init__()
         self.output_folder = output_folder
         self.anomaly = anomaly
         self.mode = mode
@@ -48,24 +51,28 @@ class SynthDataset(Dataset):
     def __getitem__(self, index):
         index = self.indices[index]
         x = self.images[index, ...]
-        y = np.expand_dims(self.targets[index, ...],axis = 1)
+        y = np.expand_dims(self.targets[index, ...],axis = 0)
         if self.transform:
             x = self.transform(x)
         return x, y
 
 def load_and_generate_data(output_folder, mode = 'train'):
-    np.random.seed(7)
+    np_random_state = np.random.get_state()
+    np.random.seed({'train':7, 'val':8, 'test':9}[mode])
+    np.random.seed({'train':7, 'val':7, 'test':7}[mode])
     h5_filename = 'synthetic_mode_'+mode+'.hdf5'
     h5_filepath = os.path.join(output_folder, h5_filename)
     if not os.path.exists(output_folder):
         os.mkdir(output_folder)
     if not os.path.exists(h5_filepath):
-        regression_target, features = prepare_data_squares_by_size()
+        size_datasets = {'train':10000, 'val':200, 'test':1000}
+        regression_target, features = prepare_data_squares_by_size(num_samples = size_datasets[mode])
         with h5py.File(h5_filepath, 'w') as hdf5_file:
             hdf5_file.create_dataset('features', 
                 data=features, dtype=np.float32)
             hdf5_file.create_dataset('regression_target',
                 data=regression_target, dtype=np.float32)
+    np.random.set_state(np_random_state)
     return h5py.File(h5_filepath, 'r')
         
 def prepare_data_squares_by_size(image_size = 224,
@@ -98,7 +105,7 @@ def init_synth_dataloader_original(output_folder, batch_size, mode='train'):
                            ]))
 
         
-    dataloader_class1 = torch.utils.data.DataLoader(dataset, batch_size=batch_size,num_workers = 0,
+    dataloader_class1 = torch.utils.data.DataLoader(utils_dataset.LoadToMemory(dataset), batch_size=batch_size,num_workers = 0,
                                              shuffle = (mode=='train'), drop_last=True)
     
     dataset = SynthDataset(output_folder,
@@ -109,7 +116,7 @@ def init_synth_dataloader_original(output_folder, batch_size, mode='train'):
                                
                            ]))
 
-    dataloader_class2 = torch.utils.data.DataLoader(dataset, batch_size=batch_size,num_workers = 0,
+    dataloader_class2 = torch.utils.data.DataLoader(utils_dataset.LoadToMemory(dataset), batch_size=batch_size,num_workers = 0,
                                              shuffle = (mode=='train'), drop_last=True)
     
     return dataloader_class1, dataloader_class2

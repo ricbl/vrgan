@@ -7,6 +7,8 @@ The VR-GAN algorithm can be used to assess how a chest x-ray would change with d
 
 The code present here uses a synthetic dataset as proof of concept of the algorithm. In this synthetic dataset, disease severity is associated with the size of the side of a square in a noisy image.  We are going to try to provide a model pre-trained on chest x-rays in the future, depending on release approval. The chest x-ray dataset used to train this model is not publically available, and there are no plans of making it available in the future.
 
+**Note:** This branch was not tested for the same results as the paper, so results may differ slightly.
+
 ## Setup
 
 The first run of the code will automatically generate the synthetic dataset. 

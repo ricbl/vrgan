@@ -12,6 +12,9 @@ from PIL import Image
 import numpy as np
 import torch
 import torchvision
+import glob
+import shutil
+import sys
 
 #normalize batch tensor so that all images stay in a range of [-1,1]
 class BatchNormalizeTensorMinMax01(object):
@@ -88,3 +91,17 @@ class Outputs():
         img = np.vstack(np.hsplit(np.hstack(delta_x_gt.detach().cpu()[:, 0]), 4))
         path = '{:}/delta_x_gt.png'.format(self.output_folder)
         save_image(path, img)
+    
+    #saves the command line command used to run these experiments
+    def save_command(self, command = None):
+        if command is None:
+            command = ' '.join(sys.argv)
+        with open("{:}/command.txt".format(self.output_folder), "w") as text_file:
+            text_file.write(command)
+    
+    #save the source files used to run this experiment
+    def save_run_state(self, py_folder_to_save):
+        if not os.path.exists('{:}/src/'.format(self.output_folder)):
+            os.mkdir('{:}/src/'.format(self.output_folder))
+        [shutil.copy(filename, ('{:}/src/').format(self.output_folder)) for filename in glob.glob(py_folder_to_save + '/*.py')]
+        self.save_command()

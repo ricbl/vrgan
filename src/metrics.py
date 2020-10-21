@@ -8,7 +8,7 @@ is complete.
 
 import collections
 import torch
-import synth_dataset
+from . import synth_dataset
 
 def normalized_cross_correlation(a,v): 
     a = a.squeeze(1)
